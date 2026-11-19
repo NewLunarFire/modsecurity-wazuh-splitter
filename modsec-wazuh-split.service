@@ -1,0 +1,18 @@
+[Unit]
+Description=Split ModSecurity audit log into one JSON line per rule match for Wazuh
+After=nginx.service
+
+[Service]
+ExecStart=/usr/bin/python3 -I /usr/local/bin/modsec-wazuh-split /var/log/modsec_audit.log /var/log/modsec_wazuh.log
+Restart=always
+RestartSec=5
+UMask=0027
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/log
+ProtectHome=yes
+PrivateTmp=yes
+PrivateNetwork=yes
+
+[Install]
+WantedBy=multi-user.target
